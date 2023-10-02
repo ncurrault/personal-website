@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Nicholas Currault</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"   integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="   crossorigin="anonymous"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+    #titleText {
+        text-align: left;
+
+        display: flex;
+        align-items: center;
+    }
+    p {
+        font-size: 16px;
+    }
+    .description {
+        background-color: #eeeeee;
+        padding: 0.8em;
+    }
+
+    html, body {
+        height: 100%;
+    }
+    .fullPage {
+        min-height: 100%;
+        height: 100%;
+    }
+
+    </style>
+    <script>
+        $(function() {
+            $(".descrCollapser").each(function() {
+                if (!$(this).data("viewtext")) {
+                    $(this).data("viewtext", "View Description");
+                }
+                if (!$(this).data("hidetext")) {
+                    $(this).data("hidetext", "Hide Description");
+                }
+            }).click(function() {
+                if (! $($(this).data("target")).hasClass("collapsing") ) { // avoid registering double click
+                    var currentlyCollapsed = $(this).data("collapsestate"); //$(this).hasClass("collapsed");
+                    var nowCollapsed = !currentlyCollapsed;
+
+                    var viewText = $(this).data("viewtext");
+                    var hideText = $(this).data("hidetext");
+
+                    if (nowCollapsed) {
+                        $(this).html(viewText);
+                    } else {
+                        $(this).html(hideText);
+                    }
+                    $(this).data("collapsestate", nowCollapsed);
+                }
+            });
+        });
+    </script>
+</head>
+<body class="container">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-50820332-5', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+<div class="jumbotron">
+<div class="row" id="titleText">
+    <div class="col-xs-9">
+        <h1>Nicholas Currault</h1>
+        <!-- résumé part 2: electric boogaloo -->
+
+    </div>
+    <div class="col-xs-3">
+        <img class="img-rounded" width="100%" src="static/364A9292.jpg">
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- <h1>Bio</h1> -->
+        <p>
+            Hi! I'm Nicholas, a Computer Science major at <a href="https://www.caltech.edu/">Caltech</a> in the Class of 2021.
+            I spend most of my time on coursework and <a href="https://donut.caltech.edu/lib/BoC_Reps">upholding Caltech's Honor Code</a>,
+            but I spend some of the remaining time creating and maintaining personal projects to benefit the people around me. This website is a list of these projects.
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <h3>In-Class Projects</h3>
+            <button data-target="#descrInclass" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true" data-viewtext="View Program Descriptions" data-hidetext="Hide Program Descriptions">View Program Descriptions</button>
+        <div id="descrInclass" class="description collapse">
+            <h4>Machine Learning</h4>
+            <ul>
+                <li>Worked with a team of other Caltech students to generate a model to predict cases of COVID-19 in the U.S. as part of <a href="http://cs156.caltech.edu/">a Caltech challenge</a></li>
+                <li>Used hidden Markov models and recurrent neural networks to generate poems in he style of Shakespearean sonnets</li>
+                <li>Created data visualizations of the MovieLens dataset using matrix factorization algorithms</li>
+            </ul>
+            <h4>Systems</h4>
+            <ul>
+                <li>Worked with group of Caltech students in Operating Systems course (CS 124) to complete an implementation of the Pintos operatings ystem</li>
+                <li>Created a command shell that supports input/output redirection, piping, EOF (Ctrl+D) to exit</li>
+                <li>Threading library in C and x86-64 assembly</li>
+                <li>Explicit heap memory allocator (with best-fit strategy, constant-time memory deallocation)</li>
+                <li>Implementation of an 8-bit Harvard architecture soft CPU with support for about 100 instructions in a hardware description language for a CPLD.</li>
+            </ul>
+            <h4>Miscellaneous C++ projects</h4>
+            <ul>
+                <li>Sudoku command-line interface and solver</li>
+                <li>Convex Hull algoriths (Gift Wrapping and Graham Scan)</li>
+                <li>Maze solver</li>
+                <li>Seam carving algorithm implementation</li>
+                <li>Fast Fourier Transform</li>
+                <li>Conway's Game of Life</li>
+                <li>Program to search for <a href="https://en.wikipedia.org/wiki/Word_ladder">word ladders</a></li>
+                <li>Implementation of Huffman Encoding for arbitrary files</li>
+                <li>Implementations of Depth-First Search, Breadth-First Search, Dijkstra's Algorithm, A* Search, and Kruskal's Algorithm using Stanford's C++ BasicGraph class</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+        <h3>Hash Function Fixpoints</h3>
+        <button data-target="#hashfixDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/hash-fixpoints/">Source Code</a>
+        <div id="hashfixDescr" class="description collapse">
+            <p>I used CUDA to search for hash fixpoints in SHA-1 Merkel Trees to automatically make a git commit that references its own hash prefix.</p>
+            <p>After implementing this project for both the GPU and CPU (using C), I compared the implementations and determined that the GPU implementation generated 8-character prefixes over 200 times faster than the CPU alternative.</p>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+        <h3>Project Euler</h3>
+        <button data-target="#descrEuler" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true" data-viewtext="View Description" data-hidetext="Hide Description">View Description</button>
+        <a class="btn btn-danger" href="https://projecteuler.net">Problems</a>
+        <!-- <a class="btn btn-success" href="https://github.com/ncurrault/project-euler">Solutions</a> -->
+
+        <div id="descrEuler" class="description collapse">
+            <p>
+                In my spare time, I have worked through several Project Euler challenges using Python. The image below should auto-update to reflect my current tally.
+            </p>
+            <img src="https://projecteuler.net/profile/nick818.png" />
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6">
+        <h3>Othello</h3>
+        <button data-target="#descrOthello" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true" data-viewtext="View Description" data-hidetext="Hide Description">View Description</button>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/othello">Source Code</a>
+        <div id="descrOthello" class="description collapse">
+            <p>
+                As a final project for CS 2, I worked in a group to create an AI that played <a href="https://en.wikipedia.org/wiki/Reversi">Othello</a>.
+                Our bot, <code>'); DROP TABLE TeamNames; --</code>, utilized minimax with various efficency optimizations to predict the board state 9 moves ahead in the allotted game time.
+                It finished 28th out of 83 bots in the 2018 tournament.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Web</h2>
+        <!-- <p>
+            I have gained web experience through several <a href="http://udacity.com">Udacity</a> courses before Caltech and my experience as Dabney Hovse Comptroller at Caltech.
+        </p> -->
+    </div>
+</div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h3>Dabney House website</h3>
+            <button data-target="#dabneyDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+            <a class="btn btn-success" href="https://dabney.caltech.edu">View</a>
+            <a class="btn btn-danger" href="https://github.com/ncurrault/dabney-service-template">Source Code Template</a>
+            <div id="dabneyDescr" class="description collapse">
+                <p>
+                    As Comptroller, an elected position within Dabney Hovse at Caltech,
+                    I worked to set up a Linux server, remake our House website,
+                    and assisted Darbs (members of Dabney Hovse) with creating accounts and using services.
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h3>Farther</h3>
+            <button data-target="#fartherDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+            <a class="btn btn-success" href="https://dabney.caltech.edu/farther">View</a>
+            <a class="btn btn-danger" href="https://github.com/ncurrault/Farther">Source Code</a>
+            <!--<a class="btn btn-danger" href="https://github.com/ncurrault/farther">Server Source Code</a>-->
+            <div id="fartherDescr" class="description collapse">
+                <p>
+                    I created an online service for events in Dabney Hovse
+                    that allows users to submit YouTube videos to be queued and
+                    played on public speakers (and, optionally, a display).
+                </p>
+                <p>
+                    Farther has three components:
+                    <ul>
+                        <li>a PHP backend that handles user requests and records songs in a database</li>
+                        <li>a Python backend that manages the queue</li>
+                        <li>a Python client running on a Raspberry Pi that interacts
+                            with the Python backend to play the proper videos on
+                            the Pi's 3.5mm audio and HDMI outputs.</li>
+                    </ul>
+                </p>
+                <p>
+                    Farther utilizes several components from <a href="https://github.com/ejaszewski/nearer-client">Nearer</a>,
+                    a similar service from Blacker Hovse (licensed under MPL 2.0).
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h3>What's for Dinner?</h3>
+            <button data-target="#dinnerDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+            <a class="btn btn-success" href="http://dabney.caltech.edu/dinner">View</a>
+            <a class="btn btn-danger" href="https://github.com/ialexryan/dinner.caltech.edu">Source Code</a>
+            <div id="dinnerDescr" class="description collapse">
+                <p>
+                    "What's for Dinner?" is a service for Caltech students hosted at <a href="http://dinner.caltech.edu">dinner.caltech.edu</a> created before I matriculated.
+                    It parses menus from <a href="http://dining.caltech.edu/">Caltech Dining Services (CDS)</a> to display the dinner options for each specific day.
+                    When CDS changed menu formatting, this service stopped updating, so I fixed it and became the main contributor to the project.
+                </p>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            <h3>In The Chips</h3>
+            <button data-target="#econDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+            <!--<a class="btn btn-success" href="http://in-the-chips.herokuapp.com">View</a>-->
+            <a class="btn btn-danger" href="https://github.com/ncurrault/in-the-chips">Source Code</a>
+            <div id="econDescr" class="description collapse">
+                <p>
+                    As a final project for a high-school economics class, I implemented a game
+                    with an online interface that enabled players to interact in real time and explore the market effects.
+                    The game recorded "transaction data," enabling the computation market data: consumer surplus, producer surplus, and deadweight loss (when we "imposed a tax," tweaked the buyer/seller ratio, or otherwise shifted the supply and demand curves)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>Brady vs Grey (Original)</h3>
+        <button data-target="#BvG1descr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="http://brady-vs-grey.appspot.com">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/brady-vs-grey">Source Code</a>
+        <div id="BvG1descr" class="description collapse">
+            <p>
+                This was my first popular application.
+                It was inspired by <i>Hello Internet</i>, a podcast of which I am a fan.
+                The app uses the <a href="https://developers.google.com/youtube/v3/">YouTube Data API</a> to tally videos on several channels.
+                This app was mentioned on the podcast and received over 12,000 pageviews in the following month.
+                Since then, it has received a total of over 73,000 views by people from all 50 states and 132 other countries.
+            </p>
+            <p>
+                I also learned the hard way how embarrassing mistakes can be.
+                Within a week of its debut, I deployed a feature that gave an average number of views.
+                However, when the number of videos that matched the criteria became zero (due to a new video by CGPGrey), the app tried to divide the total views (0) by the number of videos considered (0).
+                This attempted division by zero threw an error.
+                I promptly fixed it, but in the interim hundreds of people had seen a "500: Internal Server Error" page.
+            </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>Brady vs Grey (Improved)</h3>
+        <button data-target="#BvG2descr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="http://brady-vs-grey.herokuapp.com">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/brady-vs-grey-php">Source Code</a>
+        <div id="BvG2descr" class="description collapse">
+            <p>
+                A few months after <i>Brady vs Grey</i>'s success, a friend recommended that I clean up the aesthetics of the app.
+                I agreed, and also wanted to reprogram the app using PHP, a language I had planned to begin using.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Telegram Bots</h2>
+        <p>
+            <a href="http://telegram.org/">Telegram</a> is a messaging app
+            (notable for its security and open API)
+            that is popular among <a href="https://dabney.caltech.edu">Darbs</a>.
+            Because of this popularity, I have spent time independently learning
+            about and working with the Telegram API.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>Ranked Pairs</h3>
+        <button data-target="#rpDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="https://telegram.me/RankedPairsBot">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/ranked-pairs-telegram">Source Code</a>
+        <div id="rpDescr" class="description collapse">
+            <p>
+                While Telegram has standard, first-past-the-post polls (in which users can select a single) built in,
+                <a href="https://en.wikipedia.org/wiki/First-past-the-post_voting#Criticisms">this voting system has several flaws</a>.
+                A better (although <a href="https://en.wikipedia.org/wiki/Arrow%27s_impossibility_theorem">necessarily imperfect</a>)
+                system is <a href="https://en.wikipedia.org/wiki/Ranked_pairs">Ranked Pairs</a>,
+                which has many advantages over first-past-the-post and is thus used in most Caltech student government elections.
+            </p>
+            <p>
+                When a Telegram poll was to select a movie to watch one night,
+                the utility of a bot to run the ranked-pairs tallying was noted,
+                and I made this bot, which emulates the Telegram polling interface
+                but allows users to express rankings and tabulates the results with RP.
+            </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>Sticker Forwards Bot</h3>
+        <button data-target="#forwardsDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/forward-stickers">Source Code</a>
+        <div id="forwardsDescr" class="description collapse">
+            <p>
+                Telegram allows users to forwards messages from other users among chats.
+                In Dabney, a result of this feature was people forwarding each other's messages to
+                express a common sentiment. From here, users began screenshotting these messages to form
+                sticker packs of relevant messages. I made this bot to auto
+            </p>
+            <p>
+                Because the bot itself links to sticker packs with quotes from users' friends,
+                the actual bot username is not shared publicly to protect these people's privacy.
+                Email <a href="mailto:me@nicholascurrault.com">me@nicholascurrault.com</a> to request access.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>Quantum Go Fish</h3>
+        <button data-target="#gofishDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="https://telegram.me/QuantumGoFishBot">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/quantum-gofish">Source Code</a>
+        <div id="gofishDescr" class="description collapse">
+            <p>
+                <a href="https://stacky.net/wiki/index.php?title=Quantum_Go_Fish">Quantum Go Fish</a>
+                is a game in which players play Go Fish, but nobody knows what their cards are or even what the suits are.
+                They take turns asking each other for suits, thus making "quantum measurements" of each other's hands.
+                The winner is the first player to fully converge the game state with a question.
+            </p>
+            <p>
+                I learned this game at Caltech and, because of the amount of information players must keep track of,
+                I decided to implement the game as a Telegram bot similar to Secret Hitler (another Telegram project).
+            </p>
+        </div>
+    </div>
+    <div id="secretHitler" class="col-xs-12 col-sm-6">
+        <h3>Secret Hitler</h3>
+        <button data-target="#secretHitlerDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="https://telegram.me/SecretHitlerGame_Bot">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/Secret-Hitler-Telegram">Source Code</a>
+        <div id="secretHitlerDescr" class="description collapse">
+            <p>
+                <a href="http://secrethitler.com/"><i>Secret Hitler</i></a> is a
+                popular social-deduction board game.
+                After playing several games at Caltech, I worked with some <a href="https://github.com/CaKEandLies">other</a>
+                <a href="https://github.com/KenyonPrater">fans</a> of the game to design a Telegram bot that can moderate text-based
+                games of <i>Secret Hitler</i>.
+            </p>
+        </div>
+    </div>
+</div><div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h3>Tag Yourself</h3>
+        <button data-target="#tagUrselfDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <a class="btn btn-success" href="https://telegram.me/TagYourselfBot">View</a>
+        <a class="btn btn-danger" href="https://github.com/ncurrault/Tag-Yourself">Source Code</a>
+        <div id="tagUrselfDescr" class="description collapse">
+            <p>
+                It is a common pastime at Caltech (at least among Darbs) to draw
+                axes on communal whiteboards and encourage others to plot where
+                various people or ideas fit. One example plot was made recently
+                to show the lack of correlation between understandability and relatability.
+                (For example, sufficent sleep is understandable but not relatable, and
+                deciding to attend Caltech is relatable but not understandable.)
+            </p>
+            <p>
+                I used a Telegram bot to emulate this phenomenon virtually, using
+                matplotlib to give our shenanigans a sense of scientific validity.
+            </p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <h3>Copypasta</h3>
+        <button data-target="#copypastaDescr" data-toggle="collapse" class="btn btn-warning descrCollapser" data-collapsestate="true">View Description</button>
+        <div id="copypastaDescr" class="description collapse">
+            <p>
+                One common element of Telegram conversations I am involved in is the frequency of <a href="https://knowyourmeme.com/memes/copypasta">copypasta</a>
+                -- blocks of text that are pasted into relevant conversations.
+                I made a Telegram bot that allows Darbs to submit copypasta and easily insert it into Telegram conversations.
+            </p>
+            <p>
+                To protect the privacy of Darbs who submit content for the bot, the actual bot instance and codebase are kept private.
+                Email <a href="mailto:me@nicholascurrault.com">me@nicholascurrault.com</a> to request access.
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+</body>
+
+</html>

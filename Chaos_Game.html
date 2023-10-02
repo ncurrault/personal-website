@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html><head>
+<title>Nicholas's HTML5 Chaos Game</title>
+<style type="text/css">
+#startButton {
+	width: 100%;
+	height: 100%;
+	font-size: xx-large;
+}
+</style>
+<script type="text/javascript">
+// N.B. In all comments, a "point" is a two-element array (pt) where the pt[0] is the x-value and pt[1] is the y-value.
+
+// Declaration of Global variables; all will be given a value in setup() function.
+var vertices; // Array of vertices at [x, y] arrays
+var currPt; // The start point; variable will be updated as point is moved
+var ctx; // Canvas context
+var body; // DOM element of body
+var nPoints, delay, outlineColor, outlineWidth, ptColor, ptSize, bgColor; // User inputs
+
+function randVertex() // Picks random point from 'vertices' (an array of points)
+{
+	var orig_rand = Math.random(); // This returns a random number between 0 and 1
+	var big_int = Math.round( orig_rand * 1000); // This converts it into a 3-digit integer. Replace "1000" with a bigger number to make the selection more random.
+	var ptIndex = (big_int % 3); // Using the modulus operator means that this can only be 0, 1, or 2
+
+	return vertices[ptIndex]; // Get that index in the vertices array
+}
+
+function midPt(pt1, pt2) // Gets midpoint given two points
+{
+	var x1 = pt1[0];
+	var y1 = pt1[1];
+	var x2 = pt2[0];
+	var y2 = pt2[1];
+
+	var midX = (x1 + x2)/2; // Midpoint Theorem
+	var midY = (y1 + y2)/2; // Thanks, Ms. Cherilla!!!
+
+	return [ midX, midY ];
+}
+
+function drawPt(pt) // Draws a point on the canvas
+{
+	var x = pt[0];
+	var y = pt[1];
+
+	// Sets style
+	ctx.strokeStyle = ptColor;
+    ctx.fillStyle = ptColor;
+    ctx.lineWidth   = ptSize;
+
+    // Draws point
+	ctx.strokeRect(x,y,ptSize,ptSize);
+	ctx.fillRect(x,y,ptSize,ptSize);
+}
+
+function removeElement(id) // Given the ID of a DOM element, removes the element
+{
+	var element = document.getElementById(id);
+	element.parentNode.removeChild(element);
+}
+
+function setup () // Initializes all of the global variables, draws the outline of the triangle,
+{
+	nPoints = document.getElementById("nPoints").value; // -100
+	msDelay = document.getElementById("msDelay").value; // 0
+	outlineWidth = document.getElementById("outlineWidth").value; // 4
+	outlineColor = document.getElementById("outlineColor").value; // white
+	ptColor = document.getElementById("ptColor").value; // black
+	bgColor = document.getElementById("bgColor").value; // white
+	ptSize = document.getElementById("ptSize").value; // 1;
+
+	// Store body element (will need later)
+	body = document.getElementById("body");
+
+	// Remove start button and inputs
+	removeElement("removeLater");
+
+	// Remove margins that may interfere with triangle.
+	body.style.margin = 0;
+
+    // Prepare values for canvas
+    canvasWidth = window.innerWidth;
+    canvasHeight = window.innerHeight;
+
+    // Calculate vertices and center
+    var centerX = canvasWidth/2;
+    var centerY = canvasHeight/2;
+    currPt = [centerX, centerY];
+
+    var pt1 = [ centerX, 0 ];
+    var pt2 = [ centerX - (canvasHeight/Math.sqrt(3)), canvasHeight ]; // Calculated using 30-60-90 triangles.
+    var pt3 = [ centerX + (canvasHeight/Math.sqrt(3)), canvasHeight ]; // Thanks, Ms. Cherilla!!!
+
+    vertices = [ pt1, pt2, pt3 ];
+
+    // Check compatibility with window size
+    var compatible = true;
+    if (pt1[0] > canvasWidth) compatible = false;
+    if (pt1[0]<0) compatible = false;
+    if (pt1[1] > canvasHeight) compatible = false;
+    if (pt1[1]<0) compatible = false;
+    if (pt2[0] > canvasWidth) compatible = false;
+    if (pt2[0]<0) compatible = false;
+    if (pt2[1] > canvasHeight) compatible = false;
+    if (pt2[1]<0) compatible = false;
+    if (pt3[0] > canvasWidth) compatible = false;
+    if (pt3[0]<0) compatible = false;
+    if (pt3[1] > canvasHeight) compatible = false;
+    if (pt3[1]<0) compatible = false;
+
+    if (!compatible) // Alert user and use pre-calculated points
+    {
+    	alert("The size of your window is not supported. \nYou may have to scroll or resize your window to see the full triangle.");
+    	vertices = [[600, 0], [196, 700], [1004, 700]];
+		currPt = [600, 350];
+		canvasWidth = 1200;
+    	canvasHeight = 720;
+    }
+
+    // Create canvas and save context to global variable
+    var triangleDrawing = document.createElement("canvas");
+    triangleDrawing.id = "triangleDrawing";
+
+	triangleDrawing.width = canvasWidth;
+    triangleDrawing.height = canvasHeight;
+
+    body.appendChild(triangleDrawing);
+    ctx = triangleDrawing.getContext("2d");
+
+    // Set styles for outline
+    ctx.strokeStyle = outlineColor;
+	ctx.lineWidth   = outlineWidth;
+
+	ctx.fillStyle = bgColor; // sets color to bg
+	ctx.fillRect  (0,   0, canvasWidth, canvasHeight);  // now fill the canvas
+
+    // Draw outline of triangle
+    ctx.beginPath();
+	ctx.moveTo(vertices[0][0], vertices[0][1]);
+	ctx.lineTo(vertices[1][0], vertices[1][1]);
+	ctx.lineTo(vertices[2][0], vertices[2][1]);
+	ctx.lineTo(vertices[0][0], vertices[0][1]);
+	ctx.stroke();
+
+	ctx.closePath();
+}
+function main ()
+{
+	setup();
+
+	// Iterations counter
+	var iters=0;
+
+	// Every (delay) ms, draw the point and pick a new one
+	setInterval(function () {
+	if (iters == nPoints) // Done drawing points
+	{
+		clearInterval(); // End loop
+	}
+	else // Not done drawing points
+	{
+		drawPt(currPt); // Draw current point
+		currPt = midPt(currPt, randVertex()); // Move point halfway to random vertex
+		iters++ // Increase iters by 1.
+		// console.log(iters); // Allows one to see the number of points drawn with the JavaScript console.
+	}
+	}, msDelay)
+}
+</script>
+
+</head>
+<body id="body">
+<span id="removeLater"> <!-- This groups all of the elements so they are easy to delete later. -->
+
+<h1>Nicholas's HTML5 Chaos Game</h1> <!-- Title -->
+<hr />
+
+<table cellpadding="5"> <!-- Allows everything to be displayed in an organized, spacious format-->
+
+<tr>
+	<td align="right">Number of Points to Draw (or -100 for nonstop chaos)</td>
+	<td align="left"><input id="nPoints" type="number" min="-100" step="100" value="-100"></td>
+</tr>
+<tr>
+	<td align="right">Delay Between Points (milliseconds)</td>
+	<td align="left"><input id="msDelay" type="number" min="0" value="0" step="50"></td>
+</tr>
+
+<tr><td /></tr> <!-- Separates the core elements from the colors/styles -->
+
+<tr>
+	<td align="right">Width of outline</td>
+	<td align="left"><input id="outlineWidth" type="number" min="0" value="4"></td>
+</tr>
+<tr>
+	<td align="right">Size of Points (make smaller to be more precise)</td>
+	<td align="left"><input id="ptSize" type="number" value="1" min="0"></td>
+</tr>
+<tr>
+	<td align="right">Color of Outline</td>
+	<td align="left"><input id="outlineColor" type="color" value="white"></td>
+</tr>
+<tr>
+	<td align="right">Color of Points</td>
+	<td align="left"><input id="ptColor" type="color" value="black"></td>
+</tr>
+<tr>
+	<td align="right">Color of Background</td>
+	<td align="left"><input id="bgColor" type="color" value="white"></td>
+</tr>
+</table>
+<hr />
+<button onclick="main();" id="startButton">Click Here to Start</button></td> <!-- The main() function in the JavaScript in run when the button is clicked. -->
+<br /><br />
+To restart, refresh the page.
+
+</span>
+</body></html>
