@@ -25,25 +25,38 @@
                 const namesVal = params.get("names")
                 $("#names-textarea").val(namesVal)
             }
+            function setQuery() {
+                const searchParams = new URLSearchParams({names: $("#names-textarea").val()})
+                const fullUrl = location.protocol + "//" + window.location.host + window.location.pathname + `?${searchParams.toString()}`
+                window.history.pushState({}, "", fullUrl)
+            }
+
             function setResult(payer) {
                 $(".entry-row").hide()
                 $("#results-box").html(`${payer} pays this time!`)
                 $("#refresh-btn").removeClass("d-none")
+                $(".details-row").removeClass("d-none")
             }
             
             loadQuery()
             $("#randomize-btn").click(() => {
                 const namesVal = $("#names-textarea").val()
                 const names = namesVal.split("\n")
-                if (names.length === 0) {
+                if (names.length < 2) {
                     alert("Invalid name list")
+                    return
                 }
                 const selectedIndex = Math.floor(Math.random() * names.length)
                 setResult(names[selectedIndex])
+                setQuery()
             })
 
             $("#refresh-btn").click(() => {
                 window.location.reload()
+            })
+
+            $("#copy-link-btn").click(() => {
+                navigator.clipboard.writeText(window.location.toString())
             })
         })
     </script>
@@ -67,12 +80,21 @@
     <textarea id="names-textarea" class="col-12"></textarea>
 </div>
 
-<div class="row entry-row">
+<div class="row entry-row my-2">
     <button id="randomize-btn" class="btn btn-primary"><i class="bi-shuffle"></i> Randomize</button>
 </div>
 
+<div class="row details-row d-none">
+    <div class="col-12">
+        <p>
+            Want to save this list of people for later? You can add this page your bookmarks or home screen.
+        </p>
+        <button id="copy-link-btn" class="btn btn-light"><i class="bi-copy"></i> Copy URL</button>
+    </div>
+</div>
+
 <footer class="mt-2 pt-2 text-muted border-top">
-    <p>&copy; 2023 Nicholas Currault. All rights reserved.</p>
+    <p>&copy; 2024 Nicholas Currault. All rights reserved.</p>
 </footer>
 
 </body>
