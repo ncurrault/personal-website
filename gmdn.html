@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Geothmetic Meandian Calculator</title>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"   integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="   crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script>
+    function geoMean(xs) {
+        var prod = xs.reduce((acc, x) => acc * x, 1);
+        return Math.pow(prod, 1 / xs.length);
+    }
+    function arithMean(xs) {
+        var sum = xs.reduce((acc, x) => acc + x, 0);
+        return sum / xs.length;
+    }
+    // assumes sorted
+    function median(xs) {
+        var l = xs.length;
+        if (l % 2 == 0) {
+            return (xs[l / 2 - 1] + xs[l / 2]) / 2.0;
+        } else {
+            return xs[Math.floor(l / 2)];
+        }
+    }
+
+    function F(xs) {
+        return [ arithMean(xs), geoMean(xs), median(xs) ];
+    }
+
+    function gmdn(xs, eps) {
+        var iters = 0;
+        do {
+            xs = F(xs);
+            xs.sort((a, b) => (a - b));
+            if (iters > 100) {
+                console.log(xs);
+                break;
+            }
+        } while (xs[2] - xs[0] > eps);
+
+        return arithMean(xs)
+    }
+
+    function calc() {
+        var xs = $("#numsIn").val().split(" ").map((x) => Number(x));
+        var eps = Number($("#epsIn").val());
+        xs.sort((a, b) => (a - b));
+
+        if (eps <= 0) {
+            alert("Epsilon must be positive");
+        } else if ( xs[0] < 0 ) {
+            alert("Cannot have negative numbers in the data (nonsensical geometric mean)");
+        } else {
+            $("#gmdnOut").html("GMDN: " + gmdn(xs, eps));
+            $("#gmOut").html("Geo. Mean: " + geoMean(xs, eps));
+            $("#amOut").html("Arith. Mean: " + arithMean(xs, eps));
+            $("#mdnOut").html("Median: " + median(xs, eps));
+        }
+    }
+</script>
+
+</head>
+
+<body class="container">
+
+<div class="jumbotron">
+    <h1>Geothmetic Meandian Calculator</h1>
+    <h2>Inspired by <a href="https://xkcd.com/2435/">xkcd 2435</a></h2>
+</div>
+
+<form>
+    <div class="form-group">
+    <label for="numsIn">Data (numbers separated by single spaces):</label>
+    <textarea id="numsIn" class="form-control" rows="10">1 1 2 3 5</textarea>
+    </div>
+
+    <div class="form-group">
+    <label for="epsIn">Convergence accuracy:</label>
+    <input id="epsIn" type="number" value="0.001" min="0" />
+    </div>
+
+    <a class="btn btn-primary" onclick="calc();">Calculate</a>
+    <h1 id="gmdnOut"></h1>
+    <p id="gmOut"></p>
+    <p id="amOut"></p>
+    <p id="mdnOut"></p>
+</body>
+
+</html>
