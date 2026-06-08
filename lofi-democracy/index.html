@@ -507,6 +507,63 @@
   .audio-drop:hover, .audio-drop.drag-over { border-color: var(--accent); color: var(--accent); }
   .audio-drop input[type=file] { display: none; }
 
+  /* attribution modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg2);
+    border: 1px solid var(--fg3);
+    border-radius: 6px;
+    padding: 28px 32px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+  }
+  .modal h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .modal p { font-size: 12px; color: var(--fg2); line-height: 1.7; margin-bottom: 14px; }
+  .modal a { color: var(--accent2); text-decoration: none; }
+  .modal a:hover { text-decoration: underline; }
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: none;
+    border: none;
+    color: var(--fg3);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { color: var(--fg); }
+  .credits-btn {
+    background: none;
+    border: 1px solid var(--fg3);
+    color: var(--fg3);
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .credits-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
   /* scrollbar */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg2); }
@@ -634,9 +691,23 @@
         <span class="vol-icon">♪</span>
         <input type="range" id="vol-slider" min="0" max="1" step="0.01" value="0.6">
       </div>
+      <button class="credits-btn" id="credits-btn">© credits</button>
     </div>
   </div>
 
+</div>
+
+<!-- ATTRIBUTION MODAL -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">×</button>
+    <h2>music credits</h2>
+    <p>All music is used under the <a href="https://pixabay.com/service/license-summary/">Pixabay Content License</a>, which permits free use including in streaming and web projects.</p>
+    <p>Tracks sourced from:<br>
+      <a href="https://pixabay.com/music/search/lofi/" target="_blank" rel="noopener">pixabay.com/music/search/lofi/</a>
+    </p>
+    <p style="color:var(--fg3);font-size:11px;">This site is a non-commercial project. Video streams are public election department livestreams sourced from the <a href="https://sfelections.org/tools/election_video_stream/">San Francisco Department of Elections</a>.</p>
+  </div>
 </div>
 
 <!-- Hidden canvas for motion detection -->
@@ -985,32 +1056,60 @@ function renderTrackList() {
   `).join('');
 }
 
-addCamera('https://s65.ipcamlive.com/streams/41jhbscgax3exlpqt/stream.m3u8', '18 (Vote-by-Mail envelope sorting and signature verification scanning)', 18);
+addCamera('https://s65.ipcamlive.com/streams/417rcfnksjzevdgif/stream.m3u8', '18 (Vote-by-Mail envelope sorting and signature verification scanning)', 18);
 addCamera('https://s108.ipcamlive.com/streams/6ckgd3s7l6cvjzqme/stream.m3u8', '19 (Vote-by-Mail envelope sorting and signature verification scanning)', 19);
-addCamera('https://s65.ipcamlive.com/streams/410l67wfu4ekurxok/stream.m3u8', '29 (Provisional Envelope Imaging and Labeling)', 29);
+addCamera('https://s65.ipcamlive.com/streams/41ingopuaq1ejw9fg/stream.m3u8', '29 (Provisional Envelope Imaging and Labeling)', 29);
 addCamera('https://s109.ipcamlive.com/streams/6drxumzhc7lok1zcf/stream.m3u8', '15 (Signature verification)', 15);
 addCamera('https://s109.ipcamlive.com/streams/6dpo3kzbylenxjm67/stream.m3u8', '12 (Ballot remake)', 12);
 addCamera('https://s108.ipcamlive.com/streams/6cy0nvsyzt8fsmnj6/stream.m3u8', '10 (Ballot extraction and preparation)', 10);
 addCamera('https://s109.ipcamlive.com/streams/6dy0psdefuc3xnxpl/stream.m3u8', '11 (Ballot extraction and preparation)', 11);
 addCamera('https://s108.ipcamlive.com/streams/6cjmxumfypygwvfpz/stream.m3u8', '17 (Ballot extraction and preparation)', 17);
-addCamera('https://s65.ipcamlive.com/streams/41grxnt9hyzaftjhi/stream.m3u8', '07 (Ballot scanning)', 7);
+addCamera('https://s65.ipcamlive.com/streams/41ixzdibfa6nwwqvr/stream.m3u8', '07 (Ballot scanning)', 7);
 addCamera('https://s108.ipcamlive.com/streams/6ciqyg98kpbow230j/stream.m3u8', '09 (Ballot scanning)', 9);
 addCamera('https://s108.ipcamlive.com/streams/6cluthjloxkm4d3p5/stream.m3u8', '13 (Ballot adjudication)', 13);
 
 // ─────────────────────────────────────────────
 // PRELOADED TRACKS
 // ─────────────────────────────────────────────
-[
+const preloadedTracks = [
   { name: 'Lofi Hiphop by SolarFLEX',      url: 'media/solarflex-lofi-hiphop-541533.mp3' },
   { name: 'LoFi - LoFi Music by The_Mountain',     url: 'media/the_mountain-lofi-lofi-music-496553.mp3' },
   { name: 'LoFi - LoFi Music by microstar',     url: 'media/mirostar-lofi-lofi-music-531487.mp3' },
-].forEach(t => tracks.push(t));
-renderTrackList();
-loadTrack(0);
-setPlaying(true);
-audio.play().catch(() => {});
+  { name: 'Lofi - Lofi Girl - Lofi Chill 2 by microstar',     url: 'media/mirostar-lofi-lofi-girl-lofi-chill-2-531491.mp3' },
+  { name: 'LoFi - LoFi Music - Lofi Chill by MondaMusic', url: 'media/mondamusic-lofi-lofi-music-lofi-chill-529558.mp3'}
+];
+preloadedTracks.forEach(t => tracks.push(t));
+if (tracks.length) {
+  renderTrackList();
+  loadTrack(0);
+  // Autoplay on first user interaction (browsers block autoplay until gesture)
+  const tryAutoplay = () => {
+    audio.play().then(() => {
+      setPlaying(true);
+      document.removeEventListener('click', tryAutoplay);
+      document.removeEventListener('keydown', tryAutoplay);
+    }).catch(() => {});
+  };
+  // Try immediately (works if page was navigated to with a click)
+  audio.play().then(() => { setPlaying(true); }).catch(() => {
+    // Fall back to first interaction
+    document.addEventListener('click', tryAutoplay);
+    document.addEventListener('keydown', tryAutoplay);
+  });
+}
 
-
+// ─────────────────────────────────────────────
+// ATTRIBUTION MODAL
+// ─────────────────────────────────────────────
+document.getElementById('credits-btn').addEventListener('click', () => {
+  document.getElementById('modal-backdrop').classList.add('open');
+});
+document.getElementById('modal-close').addEventListener('click', () => {
+  document.getElementById('modal-backdrop').classList.remove('open');
+});
+document.getElementById('modal-backdrop').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
 
 // ─────────────────────────────────────────────
 // KICK OFF TIMERS
