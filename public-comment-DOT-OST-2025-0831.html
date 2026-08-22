@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Illustrative Mockup: Fee-Exclusive Pricing Under Proposed DOT Rule</title>
+<style>
+  body {
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    color: #222;
+    background: #f5f6f8;
+  }
+  h1 { font-size: 22px; }
+  .disclaimer {
+    background: #fff3cd;
+    border: 1px solid #e0c36a;
+    padding: 14px 18px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .flight-card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .route {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+    /* Both price figures below are the SAME font-size (42px) to comply
+     with a "no larger font" style rule. Everything else — weight, color,
+     contrast, spacing, order, background — is used instead to make one
+     number dominant and the other easy to skip past. */
+
+  .price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .headline-price {
+    font-size: 42px;
+    font-weight: 800;
+    color: #0a7d34;
+    line-height: 1;
+  }
+  .headline-label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* Fee-inclusive total: identical 42px font-size, but thin weight,
+     low-contrast gray-on-white, no bounding box, and placed after
+     the eye-catching green number so it reads as secondary/fine-print
+     even though the characters are the same height. */
+  .total-price {
+    font-size: 42px;
+    font-weight: 300;
+    color: #c7c9cc;
+    line-height: 1;
+  }
+  .total-label {
+    font-size: 12px;
+    color: #c7c9cc;
+    margin-top: 2px;
+  }
+
+  .fee-note {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 10px;
+    max-width: 260px;
+  }
+  .book-btn {
+    background: #0a7d34;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 15px;
+    margin-top: 14px;
+    cursor: pointer;
+  }
+  .annotation {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #fdeaea;
+    border: 1px solid #e08a8a;
+    color: #8a1f1f;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    max-width: 220px;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<h1>Illustrative Mockup — Not a Real Booking Site</h1>
+<div class="disclaimer">
+  <strong>Purpose of this file:</strong> This is a demonstration built to illustrate a consumer-protection
+  concern with the proposed DOT rule that would let airlines display a fee-exclusive price with equal
+  visual prominence to the fee-inclusive price. The red annotation boxes below call out design choices
+  (large discounted-looking headline number, fine-print fee disclosure, no visible total until late in
+  the flow) that a bad-faith actor could use to make the fee-exclusive figure functionally dominant even
+  though it complies with a "no larger font" requirement on paper. This is meant for policy analysis,
+  public comment, or educational discussion of drip-pricing and dark-pattern risks — not as a template
+  for an actual product.
+</div>
+
+<div class="flight-card">
+  <div class="annotation">
+    Both "$89" and "$214" are rendered at exactly 42px — identical font-size, satisfying a rule that
+    only regulates size. The fee-inclusive total is de-emphasized purely through font-weight (300 vs 800),
+    color (light gray vs saturated green), and by trailing after the headline number.
+  </div>
+  <div class="route">San Francisco (SFO) → New York (JFK) · Nonstop</div>
+  <div class="price-block">
+    <div>
+      <div class="headline-price">$89</div>
+      <div class="headline-label">Base fare</div>
+    </div>
+    <div>
+      <div class="total-price">$214</div>
+      <div class="total-label">Total incl. fees</div>
+    </div>
+  </div>
+  <div class="fee-note">
+    Total price including mandatory carrier fees, taxes, and surcharges: $214.
+  </div>
+  <button class="book-btn">Select</button>
+</div>
+
+<div class="flight-card">
+  <div class="annotation">
+    Same technique, second example: "$79" and "$198" are both 42px. Here the total also sits on plain
+    white with no background box, no bold weight, and no icon — while the base fare gets a colored
+    accent and bold weight. A regulator checking font-size in isolation would find full compliance.
+  </div>
+  <div class="route">San Francisco (SFO) → New York (JFK) · 1 stop</div>
+  <div class="price-block">
+    <div>
+      <div class="headline-price">$79</div>
+      <div class="headline-label">Starting fare, before fees</div>
+    </div>
+    <div>
+      <div class="total-price">$198</div>
+      <div class="total-label">Total incl. fees</div>
+    </div>
+  </div>
+  <div class="fee-note">Total with fees: $198</div>
+  <button class="book-btn">Select</button>
+</div>
+
+<p style="font-size:13px;color:#666;">
+  Both prices on this page are set at the identical 42px font-size — literally compliant with a rule
+  that only restricts font size. Prominence is instead controlled by font-weight (800 vs 300), color
+  saturation and contrast (green vs light gray on white, near WCAG-failing contrast for the total),
+  reading order (base fare first, total second), and absence of any visual container around the total.
+  This illustrates why a font-size-only prominence rule can be circumvented without violating its text,
+  and why regulators/commenters may want language covering weight, color contrast, and placement as well.
+</p>
+
+</body>
+</html>
