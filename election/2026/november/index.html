@@ -16,6 +16,21 @@
             color: #0000ff;
         }
     </style>
+
+    <script>
+        let explanationsHidden = false;
+        function toggleExplanations() {
+            if (explanationsHidden) {
+                $('#voter-guide > :not(h2, h4, h5, .candidate-name)').show()
+                $('#toggleBtn').html('Hide explanations')
+                explanationsHidden = false
+            } else {
+                $('#voter-guide > :not(h2, h4, h5, .candidate-name)').hide()
+                $('#toggleBtn').html('Show explanations')
+                explanationsHidden = true
+            }
+        }
+    </script>
 </head>
 <body class="container">
 
@@ -25,6 +40,7 @@
         <h3>By Nicholas Currault</h3>
         <p>I’m literally just some guy why would you trust me with your vote omg please also consult other sources&trade;
         </p>
+        <button id="toggleBtn" class="btn btn-primary" onclick="toggleExplanations()">Hide explanations</button>
     </div>
 </div>
 
@@ -39,6 +55,7 @@
 
     <p>Sorry it's a bit long... if you wanna just skip to <a href="#measureRTM">yes on Measure RTM</a>, that's probably the most important.</p>
 
+<section id="voter-guide">
 <h2>Federal</h2>
 
 <h4 id="us-11">U.S. Representative, District 11</h4>
@@ -864,6 +881,8 @@ its slowest day of the week.
     <li>Seems relatively uncontroversial, this basically just removes a loophole with the existing real property transfer tax.</li>
     <li>See <a href="https://www.spur.org/voter-guide/2026-11/sf-prop-j-transfer-tax-foreclosures">SPUR</a></li>
 </ul>
+
+</section>
 
 <footer class="mt-2 pt-2 text-muted border-top">
     <p>&copy; 2026 Nicholas Currault. All rights reserved.</p>
